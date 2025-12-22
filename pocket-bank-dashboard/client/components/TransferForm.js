@@ -36,10 +36,15 @@ export default function TransferForm({ onTransferSuccess }) {
     try {
       await new Promise(resolve => setTimeout(resolve, 1500));
       const result = await sendTransfer(recipient, transferAmount);
-      setAlert({ type: 'success', message: result.message });
       setRecipient('');
       setAmount('');
-      if (onTransferSuccess) onTransferSuccess();
+      if (onTransferSuccess) {
+        onTransferSuccess({
+          recipient,
+          amount: transferAmount,
+          newBalance: result.newBalance
+        });
+      }
     } catch (error) {
       setAlert({ type: 'error', message: error.message });
     } finally {

@@ -1,7 +1,6 @@
 /**
  * Dashboard Page
- * Route: /dashboard
- * Displays account balance and recent transactions with animations
+ * Enhanced with user profile, quick stats, and detailed information
  */
 
 'use client';
@@ -10,22 +9,19 @@ import { motion } from 'framer-motion';
 import BalanceCard from '@/components/BalanceCard';
 import TransactionList from '@/components/TransactionList';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import UserProfileCard from '@/components/UserProfileCard';
+import QuickStats from '@/components/QuickStats';
 import { fetchBalance, fetchTransactions } from '@/lib/api';
 
 export default function Dashboard() {
-  // State management
   const [balance, setBalance] = useState(0);
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch data when component mounts
   useEffect(() => {
     loadData();
   }, []);
 
-  /**
-   * Load balance and transactions from API
-   */
   const loadData = async () => {
     try {
       const [balanceData, transactionsData] = await Promise.all([
@@ -34,7 +30,7 @@ export default function Dashboard() {
       ]);
       
       setBalance(balanceData.balance);
-      setTransactions(transactionsData.transactions.slice(0, 5));
+      setTransactions(transactionsData.transactions);
     } catch (error) {
       console.error('Error loading data:', error);
     } finally {
@@ -55,25 +51,44 @@ export default function Dashboard() {
           Dashboard
         </motion.h1>
         
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* User Profile and Balance */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
-            className="lg:col-span-1"
+            className="lg:col-span-2"
           >
-            <BalanceCard balance={balance} />
+            <UserProfileCard />
           </motion.div>
           
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
-            className="lg:col-span-2"
           >
-            <TransactionList transactions={transactions} showFilters={false} />
+            <BalanceCard balance={balance} />
           </motion.div>
         </div>
+
+        {/* Quick Stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mb-6"
+        >
+          <QuickStats transactions={transactions} />
+        </motion.div>
+
+        {/* Recent Transactions */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <TransactionList transactions={transactions.slice(0, 5)} showFilters={false} />
+        </motion.div>
       </div>
     </div>
   );

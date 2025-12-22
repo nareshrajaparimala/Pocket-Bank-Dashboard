@@ -1,7 +1,6 @@
 /**
  * Transfer Page
- * Route: /transfer
- * Money transfer with enhanced UI and animations
+ * Enhanced with success modal animation
  */
 
 'use client';
@@ -10,11 +9,14 @@ import { motion } from 'framer-motion';
 import TransferForm from '@/components/TransferForm';
 import BalanceCard from '@/components/BalanceCard';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import SuccessModal from '@/components/SuccessModal';
 import { fetchBalance } from '@/lib/api';
 
 export default function TransferPage() {
   const [balance, setBalance] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [transferData, setTransferData] = useState(null);
 
   useEffect(() => {
     loadBalance();
@@ -29,6 +31,12 @@ export default function TransferPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleTransferSuccess = (data) => {
+    setTransferData(data);
+    setShowSuccessModal(true);
+    loadBalance();
   };
 
   if (loading) return <LoadingSpinner />;
@@ -56,10 +64,17 @@ export default function TransferPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <TransferForm onTransferSuccess={loadBalance} />
+            <TransferForm onTransferSuccess={handleTransferSuccess} />
           </motion.div>
         </div>
       </div>
+
+      {/* Success Modal */}
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        transferData={transferData}
+      />
     </div>
   );
 }
