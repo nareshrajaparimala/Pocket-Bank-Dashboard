@@ -2,6 +2,18 @@
 
 A professional, responsive fintech-style mini banking dashboard built with Next.js and Express.js.
 
+---
+
+## 🌐 **LIVE DEMO**
+
+### 🚀 **Frontend (Vercel)**
+**[https://pocket-bank-dashboard.vercel.app/](https://pocket-bank-dashboard.vercel.app/)**
+
+### ⚡ **Backend API (Render)**
+**[https://pocket-bank-dashboard.onrender.com/](https://pocket-bank-dashboard.onrender.com/)**
+
+---
+
 ## ✨ Features
 
 - 💰 View account balance

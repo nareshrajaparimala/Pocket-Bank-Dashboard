@@ -1,5 +1,17 @@
 # ⚡ Quick Start Guide
 
+---
+
+## 🌐 **LIVE DEMO - TRY IT NOW!**
+
+### 🚀 **Frontend Application**
+**[https://pocket-bank-dashboard.vercel.app/](https://pocket-bank-dashboard.vercel.app/)**
+
+### ⚡ **Backend API**
+**[https://pocket-bank-dashboard.onrender.com/](https://pocket-bank-dashboard.onrender.com/)**
+
+---
+
 ## Option 1: Automatic Setup (Recommended)
 
 ```bash
